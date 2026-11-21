@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PaperAI | Question Paper Generator</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<header class="navbar">
+  <a class="logo" href="/">📄 PaperAI</a>
+  <nav>
+    <a href="/">Home</a>
+    <a href="#generator">Generate Paper</a>
+    <a href="#features">Features</a>
+    <a href="/history">History</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <span class="tag">AI POWERED QUESTION GENERATOR</span>
+  <h1>Create Smarter<br><span>Question Papers</span></h1>
+  <p>Generate examination questions from your topic or study material.</p>
+  <a href="#generator" class="hero-btn">Start Generating →</a>
+</section>
+
+<section class="features" id="features">
+  <article class="feature">
+    <div>🤖</div>
+    <h3>AI Powered</h3>
+    <p>Generate questions using an AI model.</p>
+  </article>
+  <article class="feature">
+    <div>🎯</div>
+    <h3>Three Levels</h3>
+    <p>Easy, Intermediate and Hard.</p>
+  </article>
+  <article class="feature">
+    <div>📄</div>
+    <h3>PDF Export</h3>
+    <p>Download a printable question paper.</p>
+  </article>
+  <article class="feature">
+    <div>📚</div>
+    <h3>Study Material</h3>
+    <p>Use text extracted from a PDF.</p>
+  </article>
+</section>
+
+<main class="generator-section" id="generator">
+  <div class="section-heading">
+    <span class="tag">PAPER GENERATOR</span>
+    <h2>Create Your Question Paper</h2>
+    <p>Choose the settings for your examination paper.</p>
+  </div>
+
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+    <div class="error">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+  {% endwith %}
+
+  <form action="{{ url_for('generate') }}" method="POST"
+        enctype="multipart/form-data" id="paperForm">
+
+    <div class="form-grid">
+      <div class="field">
+        <label for="subject">Subject Name</label>
+        <input id="subject" name="subject" placeholder="e.g. Machine Learning" required>
+      </div>
+      <div class="field">
+        <label for="topic">Topic Name</label>
+        <input id="topic" name="topic" placeholder="e.g. Supervised Learning" required>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="pdf_file">Upload Study Material (optional PDF)</label>
+      <div class="upload-box">
+        <div class="upload-icon">📁</div>
+        <h3>Choose a PDF file</h3>
+        <p>PDF only, maximum 10 MB. Scanned PDFs require OCR.</p>
+        <input type="file" name="pdf_file" id="pdf_file" accept=".pdf,application/pdf">
+        <small id="fileName">No file selected</small>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="question_type">Question Type</label>
+      <select name="question_type" id="question_type" required>
+        <option value="MCQ">Multiple Choice Questions (MCQ)</option>
+        <option value="Short">Short Answer Questions</option>
+        <option value="Long">Long Answer Questions</option>
+        <option value="Mixed">Mixed Question Paper</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Difficulty Level</label>
+      <div class="level-cards">
+        <label class="level easy">
+          <input type="radio" name="difficulty" value="Easy" required>
+          <span>🟢 Easy / Basic</span>
+          <small>Definitions and concepts</small>
+        </label>
+        <label class="level medium">
+          <input type="radio" name="difficulty" value="Intermediate">
+          <span>🟡 Intermediate</span>
+          <small>Understanding and application</small>
+        </label>
+        <label class="level hard">
+          <input type="radio" name="difficulty" value="Hard">
+          <span>🔴 Hard / Advanced</span>
+          <small>Analysis and problem solving</small>
+        </label>
+      </div>
+    </div>
+
+    <div class="form-grid">
+      <div class="field">
+        <label for="number">Number of Questions</label>
+        <input type="number" id="number" name="number" min="1" max="30" value="10" required>
+      </div>
+      <div class="field">
+        <label for="marks">Marks Per Question</label>
+        <select id="marks" name="marks">
+          <option value="1">1 Mark</option>
+          <option value="2" selected>2 Marks</option>
+          <option value="3">3 Marks</option>
+          <option value="5">5 Marks</option>
+          <option value="10">10 Marks</option>
+        </select>
+      </div>
+    </div>
+
+    <button type="submit" id="generateBtn">✨ Generate Question Paper</button>
+    <p class="privacy-note">AI-generated content should be reviewed by a teacher before an actual examination.</p>
+  </form>
+</main>
+
+<footer>
+  <h3>📄 PaperAI</h3>
+  <p>Intelligent Question Paper Generation using Artificial Intelligence.</p>
+  <small>Academic project | BCA AI &amp; Data Science</small>
+</footer>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

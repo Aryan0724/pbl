@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paper History | PaperAI</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<header class="navbar">
+  <a class="logo" href="/">📄 PaperAI</a>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/history">History</a>
+  </nav>
+</header>
+
+<main class="result-container">
+  <section class="paper-header">
+    <h1>Generated Paper History</h1>
+    <p>Previously saved question papers</p>
+  </section>
+
+  {% if papers %}
+    {% for paper in papers %}
+    <article class="question-card">
+      <h3>{{ paper.subject }} — {{ paper.topic }}</h3>
+      <p>Level: {{ paper.difficulty }}</p>
+      <p>Created: {{ paper.created_at }}</p>
+      <a href="{{ url_for('result', paper_id=paper.id) }}">Open paper</a>
+    </article>
+    {% endfor %}
+  {% else %}
+    <p style="text-align:center; padding: 40px; color: #777;">No question papers have been generated yet.</p>
+  {% endif %}
+</main>
+</body>
+</html>

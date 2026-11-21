@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+*$py.class
+*.db
+.env
+venv/
+env/
+.vscode/
+.idea/
+AI_Question_Paper_Generator/static/uploads/*
+!AI_Question_Paper_Generator/static/uploads/.gitkeep
+AI_Question_Paper_Generator/generated_papers/*
+!AI_Question_Paper_Generator/generated_papers/.gitkeep

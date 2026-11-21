@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generated Paper | PaperAI</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<header class="navbar">
+  <a class="logo" href="/">📄 PaperAI</a>
+  <nav>
+    <a href="/">Create New Paper</a>
+    <a href="/history">History</a>
+  </nav>
+</header>
+
+<main class="result-container">
+  <section class="paper-header">
+    <span class="tag">AI GENERATED PAPER</span>
+    <h1>{{ paper.title }}</h1>
+    <p><b>Subject:</b> {{ paper.subject }}</p>
+    <p><b>Topic:</b> {{ paper.topic }}</p>
+    <p><b>Difficulty:</b> {{ paper.difficulty }}</p>
+    <p><b>Total Marks:</b> {{ paper.questions | sum(attribute='marks') }}</p>
+  </section>
+
+  <div class="download-actions">
+    <a href="{{ url_for('download', paper_id=paper_id) }}">⬇ Download Question Paper PDF</a>
+    <a href="{{ url_for('answer_key', paper_id=paper_id) }}">🔑 Download Answer Key PDF</a>
+    <button type="button" onclick="window.print()">🖨 Print Paper</button>
+  </div>
+
+  <section class="questions">
+    {% for q in paper.questions %}
+    <article class="question-card">
+      <h3>Q{{ q.number }}. {{ q.question }}</h3>
+      <span class="marks">{{ q.marks }} Marks · {{ q.type }}</span>
+      {% for option in q.options %}
+      <p>{{ ["A", "B", "C", "D"][loop.index0] }}. {{ option }}</p>
+      {% endfor %}
+    </article>
+    {% endfor %}
+  </section>
+
+  <p class="privacy-note">Please review AI-generated questions and answers before use.</p>
+</main>
+</body>
+</html>
